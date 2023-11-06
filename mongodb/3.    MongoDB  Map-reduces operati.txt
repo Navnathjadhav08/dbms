@@ -1,0 +1,60 @@
+3.    MongoDB – Map-reduces operations:
+Implement Map reduces operation with suitable example using MongoDB.
+
+
+switched to db prec
+prec>  db.createCollection("Map")
+{ ok: 1 }
+prec> db.Map.insert({rollno:1, department:'Computer', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c35945facfe09552f25") }
+}
+prec> db.Map.insert({rollno:1, department:'IT', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c3b945facfe09552f26") }
+}
+prec> db.Map.insert({rollno:1, department:'Computer', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c41945facfe09552f27") }
+}
+prec> db.Map.insert({rollno:2, department:'IT', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c4a945facfe09552f28") }
+}
+prec> db.Map.insert({rollno:1, department:'Chemical', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c51945facfe09552f29") }
+}
+prec> db.Map.insert({rollno:3, department:'Computer', fees:4000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c56945facfe09552f2a") }
+}
+prec> db.Map.insert({rollno:1, department:'IT', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c5c945facfe09552f2b") }
+}
+prec> db.Map.insert({rollno:2, department:'Chemical', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c62945facfe09552f2c") }
+}
+prec> db.Map.insert({rollno:1, department:'Instrumentation', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c69945facfe09552f2d") }
+}
+prec> db.Map.insert({rollno:1, department:'ETC', fees:60000});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487c6f945facfe09552f2e") }
+}
+prec>  db.Map.aggregate([{$match:{department:"Computer"}},{$group:{_id:"$rollno",total:{$sum:"$fees"}}}])
+[ { _id: 1, total: 120000 }, { _id: 3, total: 4000 } ]
+prec>

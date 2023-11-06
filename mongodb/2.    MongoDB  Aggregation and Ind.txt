@@ -1,0 +1,195 @@
+2.    MongoDB – Aggregation and Indexing:
+Design  and  Develop  MongoDB  Queries using aggregation  and  indexing  with  suitable  example using MongoDB.
+
+
+nj> db.createCollection("records");
+{ ok: 1 }
+nj>  db.records.insert({rollno:1,name:"tejas",subj:"TOC",marks:88});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487a11945facfe09552f17") }
+}
+nj>
+(To exit, press Ctrl+C again or Ctrl+D or type .exit)
+nj>   db.records.insert({rollno:2,name:"sakshi",subj:"TOC",marks:70});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487a78945facfe09552f18") }
+}
+nj> db.records.insert({rollno:3,name:"priyanka",subj:"TOC",marks:89});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487a86945facfe09552f19") }
+}
+nj>   db.records.insert({rollno:4,name:"pallavi",subj:"TOC",marks:70});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487a8f945facfe09552f1a") }
+}
+nj>   db.records.insert({rollno:5,name:"amruddh",subj:"db",marks:77});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487a9a945facfe09552f1b") }
+}
+nj>   db.records.insert({rollno:6,name:"sonu",subj:"ISEE",marks:97});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487aa2945facfe09552f1c") }
+}
+nj>   db.records.insert({rollno:7,name:"tipu",subj:"oop",marks:59});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487aab945facfe09552f1d") }
+}
+nj>   db.records.insert({rollno:8,name:"gopu",subj:"cn",marks:70});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487ab6945facfe09552f1e") }
+}
+nj>   db.records.insert({rollno:9,name:"ganesh",subj:"sepm",marks:84});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487abe945facfe09552f1f") }
+}
+nj>   db.records.insert({rollno:10,name:"arya",subj:"sepm",marks:77});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487acd945facfe09552f20") }
+}
+nj> db.records.aggregate([{$group:{_id:"$subj",marks:{$min:"$marks"}}}]);
+[
+  { _id: 'cn', marks: 70 },
+  { _id: 'db', marks: 67 },
+  { _id: 'TOC', marks: 65 },
+  { _id: 'ISEE', marks: 97 },
+  { _id: 'sepm', marks: 77 },
+  { _id: 'oop', marks: 59 }
+]
+nj>   db.records.aggregate([{$group:{_id:"$subj",marks:{$max:"$marks"}}}]);
+[
+  { _id: 'cn', marks: 70 },
+  { _id: 'db', marks: 77 },
+  { _id: 'TOC', marks: 89 },
+  { _id: 'ISEE', marks: 97 },
+  { _id: 'sepm', marks: 84 },
+  { _id: 'oop', marks: 59 }
+]
+nj>   db.records.aggregate([{$group:{_id:"$subj",marks:{$sum:"$marks"}}}]);
+[
+  { _id: 'cn', marks: 140 },
+  { _id: 'db', marks: 144 },
+  { _id: 'TOC', marks: 610 },
+  { _id: 'ISEE', marks: 194 },
+  { _id: 'sepm', marks: 322 },
+  { _id: 'oop', marks: 118 }
+]
+nj>   db.records.aggregate([{$group:{_id:"$subj",marks:{$avg:"$marks"}}}]);
+[
+  { _id: 'cn', marks: 70 },
+  { _id: 'db', marks: 72 },
+  { _id: 'TOC', marks: 76.25 },
+  { _id: 'ISEE', marks: 97 },
+  { _id: 'sepm', marks: 80.5 },
+  { _id: 'oop', marks: 59 }
+]
+nj>   db.records.aggregate([{$group:{_id:"$subj",marks:{$last:"$marks"}}}]);
+
+[
+  { _id: 'ISEE', marks: 97 },
+  { _id: 'TOC', marks: 70 },
+  { _id: 'db', marks: 77 },
+  { _id: 'sepm', marks: 77 },
+  { _id: 'oop', marks: 59 },
+  { _id: 'cn', marks: 70 }
+]
+nj>   db.records.aggregate([{$group:{_id:"$subj",marks:{$first:"$marks"}}}]);
+[
+  { _id: 'cn', marks: 70 },
+  { _id: 'db', marks: 67 },
+  { _id: 'TOC', marks: 78 },
+  { _id: 'ISEE', marks: 97 },
+  { _id: 'sepm', marks: 84 },
+  { _id: 'oop', marks: 59 }
+]
+nj> db.phonebook.insert({"srno":1, "name":"zalte sonu", "contactno":"9762646822"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487b0b945facfe09552f21") }
+}
+nj> db.phonebook.insert({"srno":2,"name":"lapade ganu", "contactno":"9762646823"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487b16945facfe09552f22") }
+}
+nj> db.phonebook.insert({"srno":3,"name":"gajare renu", "contactno":"9762646824"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487b1c945facfe09552f23") }
+}
+nj> db.phonebook.insert({"srno":4,"name":"Chivade Rohini", "contactno":"9762646825"});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId("65487b24945facfe09552f24") }
+}
+nj> db.phonebook.find().pretty();
+[
+  {
+    _id: ObjectId("65479607f374e9fe065fcaa1"),
+    srno: 1,
+    name: 'Badgujar Khushi',
+    contactno: '9762646822'
+  },
+  {
+    _id: ObjectId("6547963ff374e9fe065fcaa2"),
+    srno: 2,
+    name: 'Agarwal Sakshi',
+    contactno: '9762646823'
+  },
+  {
+    _id: ObjectId("65479644f374e9fe065fcaa3"),
+    srno: 3,
+    name: 'Gaikar Kalyani',
+    contactno: '9762646824'
+  },
+  {
+    _id: ObjectId("6547964cf374e9fe065fcaa4"),
+    srno: 4,
+    name: 'Chivade Rohini',
+    contactno: '9762646825'
+  },
+  {
+    _id: ObjectId("65487b0b945facfe09552f21"),
+    srno: 1,
+    name: 'zalte sonu',
+    contactno: '9762646822'
+  },
+  {
+    _id: ObjectId("65487b16945facfe09552f22"),
+    srno: 2,
+    name: 'lapade ganu',
+    contactno: '9762646823'
+  },
+  {
+    _id: ObjectId("65487b1c945facfe09552f23"),
+    srno: 3,
+    name: 'gajare renu',
+    contactno: '9762646824'
+  },
+  {
+    _id: ObjectId("65487b24945facfe09552f24"),
+    srno: 4,
+    name: 'Chivade Rohini',
+    contactno: '9762646825'
+  }
+]
+nj>
+
+nj> db.phonebook.ensureIndex({"srno":1});
+[ 'srno_1' ]
+nj> db.phonebook.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { srno: 1 }, name: 'srno_1' }
+]
+nj> db.records.find().min({rollno:3});

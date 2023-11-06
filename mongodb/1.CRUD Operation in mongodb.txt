@@ -1,0 +1,156 @@
+test> db.createCollection("posts")
+{ ok: 1 }
+test> db.posts.insertOne({
+...   title: "Post Title 1",
+...   body: "Body of post.",
+...   category: "News",
+...   likes: 1,
+...   tags: ["news", "events"],
+...   date: Date()
+... })
+{
+  acknowledged: true,
+  insertedId: ObjectId("65487767945facfe09552f13")
+}
+test> db.posts.insertMany([
+
+...   {
+...     title: "Post Title 2",
+...     body: "Body of post.",
+...     category: "Event",
+...     likes: 2,
+...     tags: ["news", "events"],
+...     date: Date()
+...   },
+...   {
+...     title: "Post Title 3",
+...     body: "Body of post.",
+...     category: "Technology",    likes: 3,
+...     tags: ["news", "events"],
+...     date: Date()
+...   },
+...   {
+...     title: "Post Title 4",
+...     body: "Body of post.",
+...     category: "Event",
+...     likes: 4,
+...     tags: ["news", "events"],
+...     date: Date()
+...   }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId("6548777e945facfe09552f14"),
+    '1': ObjectId("6548777e945facfe09552f15"),
+    '2': ObjectId("6548777e945facfe09552f16")
+  }
+}
+test> db.posts.find()
+[
+  {
+    _id: ObjectId("65487767945facfe09552f13"),
+    title: 'Post Title 1',
+    body: 'Body of post.',
+    category: 'News',
+    likes: 1,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:35 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId("6548777e945facfe09552f14"),
+    title: 'Post Title 2',
+    body: 'Body of post.',
+    category: 'Event',
+    likes: 2,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:58 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId("6548777e945facfe09552f15"),
+    title: 'Post Title 3',
+    body: 'Body of post.',
+    category: 'Technology',
+    likes: 3,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:58 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId("6548777e945facfe09552f16"),
+    title: 'Post Title 4',
+    body: 'Body of post.',
+    category: 'Event',
+    likes: 4,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:58 GMT+0530 (India Standard Time)'
+  }
+]
+test> db.posts.findOne()
+{
+  _id: ObjectId("65487767945facfe09552f13"),
+  title: 'Post Title 1',
+  body: 'Body of post.',
+  category: 'News',
+  likes: 1,
+  tags: [ 'news', 'events' ],
+  date: 'Mon Nov 06 2023 10:49:35 GMT+0530 (India Standard Time)'
+}
+test> db.posts.updateOne( { title: "Post Title 1" }, { $set: { likes: 2 } } )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+test> db.posts.find( { title: "Post Title 1" } )
+[
+  {
+    _id: ObjectId("65487767945facfe09552f13"),
+    title: 'Post Title 1',
+    body: 'Body of post.',
+    category: 'News',
+    likes: 2,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:35 GMT+0530 (India Standard Time)'
+  }
+]
+test> db.posts.deleteOne({ title: "Post Title 4" })
+{ acknowledged: true, deletedCount: 1 }
+test>  db.posts.find( { title: "Post Title 4" } )
+
+test>  db.posts.find()
+[
+  {
+    _id: ObjectId("65487767945facfe09552f13"),
+    title: 'Post Title 1',
+    body: 'Body of post.',
+    category: 'News',
+    likes: 2,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:35 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId("6548777e945facfe09552f14"),
+    title: 'Post Title 2',
+    body: 'Body of post.',
+    category: 'Event',
+    likes: 2,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:58 GMT+0530 (India Standard Time)'
+  },
+  {
+    _id: ObjectId("6548777e945facfe09552f15"),
+    title: 'Post Title 3',
+    body: 'Body of post.',
+    category: 'Technology',
+    likes: 3,
+    tags: [ 'news', 'events' ],
+    date: 'Mon Nov 06 2023 10:49:58 GMT+0530 (India Standard Time)'
+  }
+]
+test> db.posts.drop()
+true
+test>  db.posts.find()
+
+test>
