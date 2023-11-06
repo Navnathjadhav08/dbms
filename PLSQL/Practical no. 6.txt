@@ -1,0 +1,82 @@
+create table o_rollcall(rollno number(2), name varchar(60));
+
+
+
+insert into o_rollcall values(1, 'Paralkar Sakshi');
+
+
+
+insert into o_rollcall values(2, 'Sawant Pooja');
+
+
+
+select * from o_rollcall;
+
+
+
+create table n_rollcall(rollno number(2), name varchar(60));
+
+
+
+insert into n_rollcall values(1, 'Paralkar Sakshi');
+
+
+
+select * from n_rollcall;
+
+
+
+declare 
+cursor cur1 is
+
+select rollno, name from o_rollcall;
+
+cursor cur2 is
+select rollno from n_rollcall;
+
+r number(3);
+
+rno number(3);
+
+nm varchar(60);
+
+begin
+
+open cur1;
+
+open cur2;
+
+loop
+
+fetch cur1 into rno,nm;
+
+fetch cur2 into r;
+
+exit when cur1%found=false;
+
+if r<>rno then
+
+insert into n_rollcall values(rno,nm);
+
+end if;
+
+end loop;
+
+close cur1;
+
+close cur2;
+
+end;
+
+/
+
+
+
+
+
+
+insert into o_rollcall values(3, 'Badgujar Khushi');
+
+
+
+insert into o_rollcall values(4, 'Aher Sushant');

@@ -1,0 +1,182 @@
+SQL> create table Borrower(Roll_no number(2), Name varchar(50), Date_of_Issue date, Name_of_Book varchar(100), Status varchar(2));
+
+Table created.
+
+SQL> create table Fine(Roll_no number(2), Datee date, Amt number(5));
+
+Table created.
+
+SQL> select * from Fine;
+
+no rows selected
+
+SQL> insert into Borrower values(1, 'Nandini Chaudhari', '01-OCT-22', 'DBMS', 'I');
+
+1 row created.
+
+SQL> select * from borrower;
+
+   ROLL_NO NAME 					      DATE_OF_ISSUE
+---------- -------------------------------------------------- ------------------
+NAME_OF_BOOK
+--------------------------------------------------------------------------------
+ST
+--
+	 1 Nandini Chaudhari				      01-OCT-22
+DBMS
+I
+
+
+SQL> insert into Borrower values(2, 'Priyanka Chature', '01-SEP-22', 'JAVA', 'I');
+
+1 row created.
+
+SQL> select * from Borrower;
+
+   ROLL_NO NAME 					      DATE_OF_ISSUE
+---------- -------------------------------------------------- ------------------
+NAME_OF_BOOK
+--------------------------------------------------------------------------------
+ST
+--
+	 1 Nandini Chaudhari				      01-OCT-22
+DBMS
+I
+
+	 2 Priyanka Chature				      01-SEP-22
+JAVA
+I
+
+   ROLL_NO NAME 					      DATE_OF_ISSUE
+---------- -------------------------------------------------- ------------------
+NAME_OF_BOOK
+--------------------------------------------------------------------------------
+ST
+--
+
+
+SQL> declare
+
+   rno number(3):=&roll_number;
+
+   bname varchar(20):='&book_name';
+
+   no_days number(7);
+
+   issuedate date;
+
+   fineamt number(5):=0;
+
+   begin
+
+   select date_of_issue into issuedate from borrower where roll_no=rno;
+
+   select sysdate-to_date(issuedate)days into no_days from dual;
+
+   if(no_days>=15 and no_days<=30)then
+
+   fineamt:=no_days*5;
+
+   elsif no_days>30 then
+
+   fineamt:=no_days*50;
+
+   end if;
+
+   update borrower set status ='r' where roll_no=rno;
+
+   if fineamt>=0 then
+
+   insert into fine values(rno,sysdate,fineamt);
+
+   end if;
+
+exception
+
+   WHEN no_data_found THEN
+
+   dbms_output.put_line('record not found');
+
+   end;
+
+   /      
+
+Enter value for roll_number: 1
+old   3:    rno number(3):=&roll_number;
+new   3:    rno number(3):=1;
+Enter value for book_name: DBMS
+old   5:    bname varchar(20):='&book_name';
+new   5:    bname varchar(20):='DBMS';
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from Fine;
+
+   ROLL_NO DATEE		     AMT
+---------- ------------------ ----------
+	 1 11-OCT-22		       0
+
+SQL> declare
+
+   rno number(3):=&roll_number;
+
+   bname varchar(20):='&book_name';
+
+   no_days number(7);
+
+   issuedate date;
+
+   fineamt number(5):=0;
+
+   begin
+
+   select date_of_issue into issuedate from borrower where roll_no=rno;
+
+   select sysdate-to_date(issuedate)days into no_days from dual;
+
+   if(no_days>=15 and no_days<=30)then
+
+   fineamt:=no_days*5;
+
+   elsif no_days>30 then
+
+   fineamt:=no_days*50;
+
+   end if;
+
+   update borrower set status ='r' where roll_no=rno;
+
+   if fineamt>=0 then
+
+   insert into fine values(rno,sysdate,fineamt);
+
+   end if;
+
+exception
+
+   WHEN no_data_found THEN
+
+   dbms_output.put_line('record not found');
+
+   end;
+
+   /     
+
+Enter value for roll_number: 2
+old   3:    rno number(3):=&roll_number;
+new   3:    rno number(3):=2;
+Enter value for book_name: JAVA
+old   5:    bname varchar(20):='&book_name';
+new   5:    bname varchar(20):='JAVA';
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from Fine;
+
+   ROLL_NO DATEE		     AMT
+---------- ------------------ ----------
+	 1 11-OCT-22		       0
+	 2 11-OCT-22		    2000
+
+SQL> 
+

@@ -1,0 +1,61 @@
+
+create table library(bno number(5), bname varchar(20), author varchar(20), allowed_days number(5)); 
+
+insert into library values(1, 'JAVA', 'Mr. Katre', 10); 
+
+insert into library values(2, 'C++', 'Mr. Larry Ellison', 15); 
+
+insert into library values(3, 'OOP', 'Mr.Murti', 15); 
+
+insert into library values(4, 'Let us C', 'Yashwant Kanetkar', 10);
+
+insert into library values(5, 'DBMS', 'Rutuja Ghogare', 20);
+
+insert into library values(6, 'CN', 'Anuj Kashid', 30);
+
+select * from library;
+
+
+create table library_audit(bno number(5), old_all_days number(5), new_all_days number(5)); 
+
+select * from library_audit;
+
+
+create or replace trigger tr1 
+
+    before update or delete on library 
+
+    for each row 
+
+    begin 
+
+    insert into library_audit values(:new.bno, :old.allowed_days, :new.allowed_days); 
+
+    end; 
+
+    / 
+
+
+update library set allowed_days=13 where bno=1; 
+
+select * from library;
+
+select * from library_audit;
+
+--------------------------------------------------------------------------
+
+delete from library where bno=2;
+
+select * from library;
+
+select * from library_audit;
+
+---------------------------------------------------------------------------
+
+update library set allowed_days=50 where bno=1; 
+
+select * from library;
+
+select * from library_audit;
+-------------------------------------------------------------------------------
+
