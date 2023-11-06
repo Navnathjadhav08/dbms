@@ -12,48 +12,8 @@ no rows selected
 
 SQL> insert into Borrower values(1, 'Nandini Chaudhari', '01-OCT-22', 'DBMS', 'I');
 
-1 row created.
-
-SQL> select * from borrower;
-
-   ROLL_NO NAME 					      DATE_OF_ISSUE
----------- -------------------------------------------------- ------------------
-NAME_OF_BOOK
---------------------------------------------------------------------------------
-ST
---
-	 1 Nandini Chaudhari				      01-OCT-22
-DBMS
-I
-
 
 SQL> insert into Borrower values(2, 'Priyanka Chature', '01-SEP-22', 'JAVA', 'I');
-
-1 row created.
-
-SQL> select * from Borrower;
-
-   ROLL_NO NAME 					      DATE_OF_ISSUE
----------- -------------------------------------------------- ------------------
-NAME_OF_BOOK
---------------------------------------------------------------------------------
-ST
---
-	 1 Nandini Chaudhari				      01-OCT-22
-DBMS
-I
-
-	 2 Priyanka Chature				      01-SEP-22
-JAVA
-I
-
-   ROLL_NO NAME 					      DATE_OF_ISSUE
----------- -------------------------------------------------- ------------------
-NAME_OF_BOOK
---------------------------------------------------------------------------------
-ST
---
-
 
 SQL> declare
 
